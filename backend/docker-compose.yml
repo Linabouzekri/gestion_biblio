@@ -1,0 +1,115 @@
+version: '3.9'
+
+services: 
+  #mongodb services livre
+  api_livre_db: 
+    container_name: livre_container
+    image: mongo:latest
+    restart: always 
+    volumes: 
+      - api_livre_db:/data/db
+
+  #mongodb services client
+  api_client_db: 
+    container_name: client_container
+    image: mongo:latest
+    restart: always 
+    volumes: 
+      - api_client_db:/data/db
+
+  #mongodb services emprunt
+  api_emprunt_db: 
+    container_name: emprunt_container
+    image: mongo:latest
+    restart: always 
+    volumes: 
+      - api_emprunt_db:/data/db
+
+  #mongodb services emprunt
+  api_notification_db: 
+    container_name: notification_container
+    image: mongo:latest
+    restart: always 
+    volumes: 
+      - api_notification_db:/data/db
+
+  # node api service  livre
+  api_livre: 
+    build: ./api_livre
+    ports: 
+      - 4002:4002 
+    environment:
+      PORT: 4002
+      mongoDBURL: mongodb://livre_container:27017/
+      DB_NAME: service_livre
+      SECRET: linabouzakrititwaneprojetmern
+      HOSTNAME: '192.168.11.100'
+    depends_on: 
+      - api_livre_db
+
+  # node api service  client
+  api_client: 
+    build: ./api_client
+    ports: 
+      - 4000:4000
+    environment:
+      PORT: 4000
+      mongoDBURL: mongodb://client_container:27017/
+      DB_NAME: service_client
+      SECRET: linabouzakrititwaneprojetmern
+      HOSTNAME: '192.168.11.100'
+    depends_on: 
+      - api_client_db
+
+
+  # node api service emprunt
+  api_emprunt: 
+    build: ./api_emprunt
+    ports: 
+      - 4001:4001
+    environment:
+      PORT: 4001
+      mongoDBURL: mongodb://emprunt_container:27017/
+      DB_NAME: service_Emprunt
+      SECRET: linabouzakrititwaneprojetmern
+      HOSTNAME: '192.168.11.100'
+    depends_on: 
+      - api_emprunt_db
+      - api_livre
+      - api_client
+  # node api service emprunt
+  
+  api_notification: 
+    build: ./api_notification
+    ports: 
+      - 4003:4003
+    environment:
+      PORT: 4003
+      mongoDBURL: mongodb://notification_container:27017/
+      DB_NAME: service_notification
+      SECRET: linabouzakrititwaneprojetmern
+      HOSTNAME: '192.168.11.100'
+      USER : linabouzekri90@gmail.com
+      PASSWORD : tbfxgdamghjfwvud
+    depends_on: 
+      - api_notification_db
+      - api_livre
+      - api_client
+      - api_emprunt
+
+volumes: 
+  api_livre_db: {}
+  api_client_db: {}
+  api_emprunt_db: {}
+  api_notification_db : {}
+
+
+
+
+
+
+
+    
+
+
+

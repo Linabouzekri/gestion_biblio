@@ -1,0 +1,11 @@
+./api_livre/node_modules 
+./api_livre/Dockerfile
+.dockerignore 
+.docker-compose.yml 
+./api_client/node_modules 
+./api_client/Dockerfile
+./api_emprunt/node_modules 
+./api_emprunt/Dockerfile
+
+
+
