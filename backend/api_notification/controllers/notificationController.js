@@ -88,7 +88,7 @@ const retournLivre = async(req , res)=>{
 
         const mailOption = {
             from: {
-                name : "LinaBiblio",
+                name : "LSBiblio",
                 address : process.env.USER
             },
             to: to, subject, 
